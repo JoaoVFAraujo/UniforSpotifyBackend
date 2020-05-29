@@ -1,8 +1,10 @@
 package com.spotify.unifor.spotifyUnifor.domain.usecase;
 
 import com.spotify.unifor.spotifyUnifor.domain.exception.UserExistsException;
+import com.spotify.unifor.spotifyUnifor.domain.exception.UserNotExistsException;
 import com.spotify.unifor.spotifyUnifor.domain.model.User;
 import com.spotify.unifor.spotifyUnifor.domain.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ public class UserBusiness {
   }
 
   public ResponseEntity<HashMap<String, Object>> findById(Integer id) {
+    if (this.userRepository.findById(id).getBody().get("body") == null) throw new UserNotExistsException();
     return this.userRepository.findById(id);
   }
 

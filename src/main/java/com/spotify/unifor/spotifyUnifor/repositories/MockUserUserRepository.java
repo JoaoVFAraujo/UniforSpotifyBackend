@@ -48,7 +48,7 @@ public class MockUserUserRepository implements UserRepository {
 
   @Override
   public ResponseEntity<HashMap<String, Object>> findById(Integer id) {
-    return new ResponseEntity<HashMap<String, Object>>(Response.init().withMessage("Logado com sucesso").withBody(this.users.get(id)).getResponse(), HttpStatus.OK);
+    return new ResponseEntity<HashMap<String, Object>>(Response.init().withMessage("Usuário encontrado com sucesso!").withBody(this.users.get(id)).getResponse(), HttpStatus.OK);
   }
 
   @Override

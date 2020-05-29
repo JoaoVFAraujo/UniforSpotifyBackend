@@ -1,13 +1,17 @@
 package com.spotify.unifor.spotifyUnifor.domain.repository;
 
 import com.spotify.unifor.spotifyUnifor.domain.model.User;
+import org.springframework.http.ResponseEntity;
+
+import java.util.HashMap;
 
 public interface UserRepository {
 
-  User login(User user);
-  User findById(Integer id);
+  ResponseEntity<HashMap<String, Object>> login(User user);
+  ResponseEntity<HashMap<String, Object>> listAll();
+  ResponseEntity<HashMap<String, Object>> findById(Integer id);
   Boolean existsByEmail(String email);
-  User save(User user);
-  User update(User user);
+  ResponseEntity<HashMap<String, Object>> save(User user);
+  ResponseEntity<HashMap<String, Object>> update(User user);
 
 }

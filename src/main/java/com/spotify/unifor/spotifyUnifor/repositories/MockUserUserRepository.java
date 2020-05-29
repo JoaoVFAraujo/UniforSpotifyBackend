@@ -1,17 +1,23 @@
 package com.spotify.unifor.spotifyUnifor.repositories;
 
-
 import com.spotify.unifor.spotifyUnifor.domain.exception.UserAuthenticateException;
+import com.spotify.unifor.spotifyUnifor.domain.model.Response;
 import com.spotify.unifor.spotifyUnifor.domain.model.User;
 import com.spotify.unifor.spotifyUnifor.domain.repository.UserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import javax.inject.Named;
+import java.security.SecureRandom;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 @Named
 public class MockUserUserRepository implements UserRepository {
+
+  protected static SecureRandom random = new SecureRandom();
 
   private HashMap<Integer, User> users = new HashMap<>();
   {
@@ -21,20 +27,28 @@ public class MockUserUserRepository implements UserRepository {
   }
 
   @Override
-  public User login(User user) {
-    return this.users.entrySet().stream()
+  public ResponseEntity<HashMap<String, Object>> login(User user) {
+    final User login = this.users.entrySet().stream()
       .filter(
         entry ->  Objects.equals(entry.getValue().getEmail(), user.getEmail()) &&
-                  Objects.equals(entry.getValue().getSenha(), user.getSenha())
+          Objects.equals(entry.getValue().getSenha(), user.getSenha())
       )
       .map(Map.Entry::getValue)
       .findFirst()
       .orElseThrow(UserAuthenticateException::new);
+
+
+    HashMap<String, Object> body = new HashMap<String, Object>();
+    body.put("userId", login.getId());
+    body.put("user", login);
+    body.put("token", this.token());
+
+    return new ResponseEntity<HashMap<String, Object>>(Response.init().withMessage("Logado com sucesso").withBody(body).getResponse(), HttpStatus.OK);
   }
 
   @Override
-  public User findById(Integer id) {
-    return this.users.get(id);
+  public ResponseEntity<HashMap<String, Object>> findById(Integer id) {
+    return new ResponseEntity<HashMap<String, Object>>(Response.init().withMessage("Logado com sucesso").withBody(this.users.get(id)).getResponse(), HttpStatus.OK);
   }
 
   @Override
@@ -49,17 +63,17 @@ public class MockUserUserRepository implements UserRepository {
   }
 
   @Override
-  public User save(User user) {
+  public ResponseEntity<HashMap<String, Object>> save(User user) {
     final Integer id = this.users.size() + 1;
     final User userMock =  user.withId(id);
 
     this.users.put(id, userMock);
-    return userMock;
+    return new ResponseEntity<HashMap<String, Object>>(Response.init().withMessage("Usuário cadastrado com sucesso!").withBody(userMock).getResponse(), HttpStatus.OK);
   }
 
   @Override
-  public User update(User user) {
-    User userMock = findById(user.getId());
+  public ResponseEntity<HashMap<String, Object>> update(User user) {
+    User userMock = (User) findById(user.getId()).getBody().get("body");
 
     userMock.setNome(user.getNome());
     userMock.setEmail(user.getEmail());
@@ -70,6 +84,18 @@ public class MockUserUserRepository implements UserRepository {
 
     this.users.put(userMock.getId(), userMock);
 
-    return userMock;
+    return new ResponseEntity<HashMap<String, Object>>(Response.init().withMessage("Usuário editado com sucesso").withBody(userMock).getResponse(), HttpStatus.OK);
   }
+
+  @Override
+  public ResponseEntity<HashMap<String, Object>> listAll() {
+    return new ResponseEntity<HashMap<String, Object>>(Response.init().withMessage("Todos usuários").withBody(this.users.values()).getResponse(), HttpStatus.OK);
+  }
+
+  String token () {
+    long longToken = Math.abs( random.nextLong() );
+    String random = Long.toString( longToken, 30 );
+    return  random;
+  }
+
 }

@@ -9,10 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 import javax.inject.Named;
 import java.security.SecureRandom;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Named
 public class MockUserUserRepository implements UserRepository {
@@ -21,9 +18,12 @@ public class MockUserUserRepository implements UserRepository {
 
   private HashMap<Integer, User> users = new HashMap<>();
   {
-    users.put(1, User.init().withId(1).withNome("Joao").withEmail("joao@teste.com").withSenha("teste123"));
-    users.put(2, User.init().withId(2).withNome("Enilton").withEmail("enilton@teste.com").withSenha("teste321"));
-    users.put(3, User.init().withId(3).withNome("Davi").withEmail("davi@teste.com").withSenha("123teste"));
+    users.put(1, User.init().withId(1).withNome("Joao").withEmail("joao@teste.com").withSenha("teste123")
+      .withData(new Date()).withGenero(("m")).withCompartilharDados(false));
+    users.put(2, User.init().withId(2).withNome("Enilton").withEmail("enilton@teste.com").withSenha("teste321")
+      .withData(new Date()).withGenero(("m")).withCompartilharDados(true));
+    users.put(3, User.init().withId(3).withNome("Marina").withEmail("marina@teste.com").withSenha("123teste")
+      .withData(new Date()).withGenero(("f")).withCompartilharDados(false));
   }
 
   @Override

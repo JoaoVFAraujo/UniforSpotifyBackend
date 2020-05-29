@@ -4,12 +4,10 @@ import com.spotify.unifor.spotifyUnifor.domain.exception.UserExistsException;
 import com.spotify.unifor.spotifyUnifor.domain.exception.UserNotExistsException;
 import com.spotify.unifor.spotifyUnifor.domain.model.User;
 import com.spotify.unifor.spotifyUnifor.domain.repository.UserRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.Collection;
 import java.util.HashMap;
 
 @Service
@@ -33,6 +31,9 @@ public class UserBusiness {
   }
 
   public ResponseEntity<HashMap<String, Object>> update(User user) {
+    User userMock = (User) userRepository.findById(user.getId()).getBody().get("body");
+    if (userMock.getEmail() != user.getEmail() && userRepository.existsByEmail(user.getEmail())) throw new UserExistsException(user.getEmail());
+
     return this.userRepository.update(user);
   }
 

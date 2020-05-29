@@ -36,6 +36,21 @@ public class User {
     return this;
   }
 
+  public User withData(Date date) {
+    this.data = date;
+    return this;
+  }
+
+  public User withGenero(String genero) {
+    this.genero = genero;
+    return this;
+  }
+
+  public User withCompartilharDados(Boolean compartilharDados) {
+    this.compartilharDados = compartilharDados;
+    return this;
+  }
+
   public Integer getId() {
     return id;
   }

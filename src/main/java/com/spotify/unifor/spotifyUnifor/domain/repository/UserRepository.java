@@ -4,14 +4,15 @@ import com.spotify.unifor.spotifyUnifor.domain.model.User;
 import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
+import java.util.List;
 
 public interface UserRepository {
 
-  ResponseEntity<HashMap<String, Object>> login(User user);
-  ResponseEntity<HashMap<String, Object>> listAll();
-  ResponseEntity<HashMap<String, Object>> findById(Integer id);
+  User login(User user);
+  List<User> listAll();
+  User findById(Integer id);
   Boolean existsByEmail(String email);
-  ResponseEntity<HashMap<String, Object>> save(User user);
-  ResponseEntity<HashMap<String, Object>> update(User user);
+  User save(User user);
+  User update(User user);
 
 }

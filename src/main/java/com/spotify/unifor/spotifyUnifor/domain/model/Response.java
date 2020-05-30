@@ -1,7 +1,11 @@
 package com.spotify.unifor.spotifyUnifor.domain.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.HashMap;
 
+@Getter @Setter
 public class Response <T>{
 
   private String message;

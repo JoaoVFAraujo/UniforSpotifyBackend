@@ -1,12 +1,11 @@
 package com.spotify.unifor.spotifyUnifor.repositories;
 
+import com.spotify.unifor.spotifyUnifor.domain.exception.MusicNotExistsException;
 import com.spotify.unifor.spotifyUnifor.domain.model.Music;
 import com.spotify.unifor.spotifyUnifor.domain.repository.MusicRepository;
 
 import javax.inject.Named;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Named
@@ -39,7 +38,8 @@ public class MockMusicRepository implements MusicRepository {
   }
 
   @Override
-  public Music findById(Integer id) {
-    return this.musics.get(id);
+  public Optional<Music> findById(Integer id) {
+
+    return Optional.ofNullable(this.musics.get(id));
   }
 }

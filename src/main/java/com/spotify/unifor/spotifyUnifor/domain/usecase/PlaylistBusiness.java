@@ -1,5 +1,6 @@
 package com.spotify.unifor.spotifyUnifor.domain.usecase;
 
+import com.spotify.unifor.spotifyUnifor.domain.exception.MusicNotExistsException;
 import com.spotify.unifor.spotifyUnifor.domain.exception.PlaylistNotExistsExeception;
 import com.spotify.unifor.spotifyUnifor.domain.model.Playlist;
 import com.spotify.unifor.spotifyUnifor.domain.model.Response;
@@ -34,7 +35,7 @@ public class PlaylistBusiness {
   }
 
   public ResponseEntity<HashMap<String, Object>> findById(Integer id) {
-    if (this.playlistRepository.findById(id) == null) throw new PlaylistNotExistsExeception();
+    this.playlistRepository.findById(id).orElseThrow(PlaylistNotExistsExeception::new);
 
     return new ResponseEntity<HashMap<String, Object>>
       (Response.init()
@@ -44,7 +45,7 @@ public class PlaylistBusiness {
   }
 
   public ResponseEntity<HashMap<String, Object>> update(Playlist playlist) {
-    if (this.playlistRepository.findById(playlist.getId()) == null) throw new PlaylistNotExistsExeception();
+    this.playlistRepository.findById(playlist.getId()).orElseThrow(PlaylistNotExistsExeception::new);
 
     return new ResponseEntity<HashMap<String, Object>>
       (Response.init()

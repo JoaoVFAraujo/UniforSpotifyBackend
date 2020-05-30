@@ -20,16 +20,17 @@ public class MusicBusiness {
     return new ResponseEntity<HashMap<String, Object>>
       (Response.init()
         .withMessage("Todas musicas")
-        .withBody(musicRepository.listAll())
+        .withBody(this.musicRepository.listAll())
         .getResponse(), HttpStatus.OK);
   }
 
   public ResponseEntity<HashMap<String, Object>> findById(Integer id) {
-    if (musicRepository.findById(id) == null) throw new MusicNotExistsException();
+    this.musicRepository.findById(id).orElseThrow(MusicNotExistsException::new);
+
     return new ResponseEntity<HashMap<String, Object>>
       (Response.init()
         .withMessage("Musica encontrada com sucesso!")
-        .withBody(musicRepository.findById(id))
+        .withBody(this.musicRepository.findById(id))
         .getResponse(), HttpStatus.OK);
   }
 

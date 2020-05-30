@@ -24,22 +24,19 @@ public class MockUserRepository implements UserRepository {
   }
 
   @Override
-  public User login(User user) {
-    final User userMock = this.users.entrySet().stream()
+  public Optional<User> login(User user) {
+    return this.users.entrySet().stream()
       .filter(
         entry ->  Objects.equals(entry.getValue().getEmail(), user.getEmail()) &&
           Objects.equals(entry.getValue().getSenha(), user.getSenha())
       )
       .map(Map.Entry::getValue)
-      .findFirst()
-      .orElseThrow(UserAuthenticateException::new);
-
-    return userMock;
+      .findFirst();
   }
 
   @Override
-  public User findById(Integer id) {
-    return users.get(id);
+  public Optional<User> findById(Integer id) {
+    return Optional.ofNullable(this.users.get(id));
   }
 
   @Override
@@ -54,17 +51,17 @@ public class MockUserRepository implements UserRepository {
   }
 
   @Override
-  public User save(User user) {
+  public Optional<User> save(User user) {
     final Integer id = this.users.size() + 1;
     final User userMock = user.withId(id);
 
     this.users.put(id, userMock);
-    return userMock;
+    return Optional.of(userMock);
   }
 
   @Override
-  public User update(User user) {
-    User userMock = this.findById(user.getId());
+  public Optional<User> update(User user) {
+    User userMock = this.findById(user.getId()).get();
 
     userMock.setNome(user.getNome());
     userMock.setEmail(user.getEmail());
@@ -75,7 +72,7 @@ public class MockUserRepository implements UserRepository {
 
     this.users.put(userMock.getId(), userMock);
 
-    return userMock;
+    return Optional.of(userMock);
   }
 
   @Override

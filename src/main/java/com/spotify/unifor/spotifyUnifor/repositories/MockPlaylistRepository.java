@@ -7,6 +7,7 @@ import javax.inject.Named;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Named
@@ -36,22 +37,22 @@ public class MockPlaylistRepository implements PlaylistRepository {
   }
 
   @Override
-  public Playlist save(Playlist playlist) {
+  public Optional<Playlist> save(Playlist playlist) {
     final Integer id = this.playlists.size() + 1;
     Playlist playlistMock = playlist.withId(id);
 
     this.playlists.put(id, playlistMock);
-    return playlistMock;
+    return Optional.of(playlistMock);
   }
 
   @Override
-  public Playlist findById(Integer id) {
-    return this.playlists.get(id);
+  public Optional<Playlist> findById(Integer id) {
+    return Optional.ofNullable(this.playlists.get(id));
   }
 
     @Override
-  public Playlist update(Playlist playlist) {
-    Playlist playlistMock = this.findById(playlist.getId());
+  public Optional<Playlist> update(Playlist playlist) {
+    Playlist playlistMock = this.findById(playlist.getId()).get();
 
     playlistMock.setNome(playlist.getNome());
     playlistMock.setImage(playlist.getImage());
@@ -60,6 +61,6 @@ public class MockPlaylistRepository implements PlaylistRepository {
 
     this.playlists.put(playlistMock.getId(), playlistMock);
 
-    return playlistMock;
+    return Optional.of(playlistMock);
   }
 }

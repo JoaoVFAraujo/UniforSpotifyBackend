@@ -1,5 +1,7 @@
 package com.spotify.unifor.spotifyUnifor.domain.usecase;
 
+import com.spotify.unifor.spotifyUnifor.domain.exception.PlaylistNotExistsExeception;
+import com.spotify.unifor.spotifyUnifor.domain.exception.UserAuthenticateException;
 import com.spotify.unifor.spotifyUnifor.domain.exception.UserExistsException;
 import com.spotify.unifor.spotifyUnifor.domain.exception.UserNotExistsException;
 import com.spotify.unifor.spotifyUnifor.domain.model.Response;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import java.security.SecureRandom;
 import java.util.HashMap;
+import java.util.Objects;
 
 @Service
 public class UserBusiness {
@@ -23,7 +26,7 @@ public class UserBusiness {
 
   public ResponseEntity<HashMap<String, Object>> login(User user) {
 
-    final User userMock = this.userRepository.login(user);
+    final User userMock = this.userRepository.login(user).orElseThrow(UserAuthenticateException::new);
 
     HashMap<String, Object> body = new HashMap<String, Object>();
     body.put("userId", userMock.getId());
@@ -38,7 +41,7 @@ public class UserBusiness {
   }
 
   public ResponseEntity<HashMap<String, Object>> findById(Integer id) {
-    if (this.userRepository.findById(id) == null) throw new UserNotExistsException();
+    this.userRepository.findById(id).orElseThrow(UserNotExistsException::new);
 
     return new ResponseEntity<HashMap<String, Object>>
       (Response.init()
@@ -48,7 +51,7 @@ public class UserBusiness {
   }
 
   public ResponseEntity<HashMap<String, Object>> save(User user) {
-    if (userRepository.existsByEmail(user.getEmail())) throw new UserExistsException(user.getEmail());
+    if (this.userRepository.existsByEmail(user.getEmail())) throw new UserExistsException(user.getEmail());
 
     return new ResponseEntity<HashMap<String, Object>>
       (Response.init()
@@ -58,10 +61,10 @@ public class UserBusiness {
   }
 
   public ResponseEntity<HashMap<String, Object>> update(User user) {
-    User userMock = this.userRepository.findById(user.getId());
+    User userMock = this.userRepository.findById(user.getId()).orElseThrow(UserNotExistsException::new);
 
-    if (this.userRepository.findById(user.getId()) == null) throw new UserNotExistsException();
-    if (!(userMock.getEmail().equals(user.getEmail())) && this.userRepository.existsByEmail(user.getEmail())) throw new UserExistsException(user.getEmail());
+    if (!(Objects.equals(userMock.getEmail(), user.getEmail())) && this.userRepository.existsByEmail(user.getEmail()))
+      throw new UserExistsException(user.getEmail());
 
     return new ResponseEntity<HashMap<String, Object>>
       (Response.init()

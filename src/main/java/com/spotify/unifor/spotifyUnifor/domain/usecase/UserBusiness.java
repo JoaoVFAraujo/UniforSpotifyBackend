@@ -39,6 +39,7 @@ public class UserBusiness {
 
   public ResponseEntity<HashMap<String, Object>> findById(Integer id) {
     if (this.userRepository.findById(id) == null) throw new UserNotExistsException();
+
     return new ResponseEntity<HashMap<String, Object>>
       (Response.init()
         .withMessage("Usuário encontrado com sucesso!")
@@ -48,6 +49,7 @@ public class UserBusiness {
 
   public ResponseEntity<HashMap<String, Object>> save(User user) {
     if (userRepository.existsByEmail(user.getEmail())) throw new UserExistsException(user.getEmail());
+
     return new ResponseEntity<HashMap<String, Object>>
       (Response.init()
         .withMessage("Usuário cadastrado com sucesso!")
@@ -57,9 +59,8 @@ public class UserBusiness {
 
   public ResponseEntity<HashMap<String, Object>> update(User user) {
     User userMock = this.userRepository.findById(user.getId());
-    System.out.println(userMock.getEmail() != user.getEmail());
-    System.out.println(userMock.getEmail().toString() != user.getEmail().toString());
-    
+
+    if (this.userRepository.findById(user.getId()) == null) throw new UserNotExistsException();
     if (!(userMock.getEmail().equals(user.getEmail())) && this.userRepository.existsByEmail(user.getEmail())) throw new UserExistsException(user.getEmail());
 
     return new ResponseEntity<HashMap<String, Object>>

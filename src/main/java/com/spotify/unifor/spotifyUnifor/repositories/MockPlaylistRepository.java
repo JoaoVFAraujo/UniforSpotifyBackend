@@ -1,13 +1,7 @@
 package com.spotify.unifor.spotifyUnifor.repositories;
 
-import com.spotify.unifor.spotifyUnifor.domain.model.Music;
 import com.spotify.unifor.spotifyUnifor.domain.model.Playlist;
-import com.spotify.unifor.spotifyUnifor.domain.model.Response;
-import com.spotify.unifor.spotifyUnifor.domain.repository.MusicRepository;
 import com.spotify.unifor.spotifyUnifor.domain.repository.PlaylistRepository;
-import com.spotify.unifor.spotifyUnifor.domain.usecase.MusicBusiness;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import javax.inject.Named;
 import java.util.HashMap;
@@ -39,5 +33,33 @@ public class MockPlaylistRepository implements PlaylistRepository {
   @Override
   public List<Playlist> listAll() {
     return playlists.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList());
+  }
+
+  @Override
+  public Playlist save(Playlist playlist) {
+    final Integer id = this.playlists.size() + 1;
+    Playlist playlistMock = playlist.withId(id);
+
+    this.playlists.put(id, playlistMock);
+    return playlistMock;
+  }
+
+  @Override
+  public Playlist findById(Integer id) {
+    return this.playlists.get(id);
+  }
+
+    @Override
+  public Playlist update(Playlist playlist) {
+    Playlist playlistMock = this.findById(playlist.getId());
+
+    playlistMock.setNome(playlist.getNome());
+    playlistMock.setImage(playlist.getImage());
+    playlistMock.setUserId(playlist.getUserId());
+    playlistMock.setMusicas(playlist.getMusicas());
+
+    this.playlists.put(playlistMock.getId(), playlistMock);
+
+    return playlistMock;
   }
 }

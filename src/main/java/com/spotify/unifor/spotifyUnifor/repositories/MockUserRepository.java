@@ -1,11 +1,8 @@
 package com.spotify.unifor.spotifyUnifor.repositories;
 
 import com.spotify.unifor.spotifyUnifor.domain.exception.UserAuthenticateException;
-import com.spotify.unifor.spotifyUnifor.domain.model.Response;
 import com.spotify.unifor.spotifyUnifor.domain.model.User;
 import com.spotify.unifor.spotifyUnifor.domain.repository.UserRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import javax.inject.Named;
 import java.util.*;
@@ -59,7 +56,7 @@ public class MockUserRepository implements UserRepository {
   @Override
   public User save(User user) {
     final Integer id = this.users.size() + 1;
-    final User userMock =  user.withId(id);
+    final User userMock = user.withId(id);
 
     this.users.put(id, userMock);
     return userMock;

@@ -1,6 +1,5 @@
 package com.spotify.unifor.spotifyUnifor.domain.usecase;
 
-import com.spotify.unifor.spotifyUnifor.domain.exception.PlaylistNotExistsExeception;
 import com.spotify.unifor.spotifyUnifor.domain.exception.UserAuthenticateException;
 import com.spotify.unifor.spotifyUnifor.domain.exception.UserExistsException;
 import com.spotify.unifor.spotifyUnifor.domain.exception.UserNotExistsException;

@@ -1,6 +1,5 @@
 package com.spotify.unifor.spotifyUnifor.domain.usecase;
 
-import com.spotify.unifor.spotifyUnifor.domain.exception.MusicNotExistsException;
 import com.spotify.unifor.spotifyUnifor.domain.exception.PlaylistNotExistsExeception;
 import com.spotify.unifor.spotifyUnifor.domain.model.Playlist;
 import com.spotify.unifor.spotifyUnifor.domain.model.Response;

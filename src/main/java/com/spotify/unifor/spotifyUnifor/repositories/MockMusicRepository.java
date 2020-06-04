@@ -1,6 +1,5 @@
 package com.spotify.unifor.spotifyUnifor.repositories;
 
-import com.spotify.unifor.spotifyUnifor.domain.exception.MusicNotExistsException;
 import com.spotify.unifor.spotifyUnifor.domain.model.Music;
 import com.spotify.unifor.spotifyUnifor.domain.repository.MusicRepository;
 

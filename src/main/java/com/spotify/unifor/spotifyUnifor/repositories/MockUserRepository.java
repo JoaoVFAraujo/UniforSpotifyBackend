@@ -1,6 +1,5 @@
 package com.spotify.unifor.spotifyUnifor.repositories;
 
-import com.spotify.unifor.spotifyUnifor.domain.exception.UserAuthenticateException;
 import com.spotify.unifor.spotifyUnifor.domain.model.User;
 import com.spotify.unifor.spotifyUnifor.domain.repository.UserRepository;
 

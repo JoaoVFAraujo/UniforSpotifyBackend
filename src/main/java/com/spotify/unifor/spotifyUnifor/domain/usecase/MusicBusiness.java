@@ -17,6 +17,7 @@ public class MusicBusiness {
   private MusicRepository musicRepository;
 
   public ResponseEntity<HashMap<String, Object>> listAll() {
+
     return new ResponseEntity<HashMap<String, Object>>
       (Response.init()
         .withMessage("Todas musicas")

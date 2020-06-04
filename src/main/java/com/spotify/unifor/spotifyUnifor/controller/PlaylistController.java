@@ -16,22 +16,22 @@ public class PlaylistController {
   private PlaylistBusiness playlistBusiness;
 
   @GetMapping(path = "/playlist")
-  ResponseEntity<HashMap<String, Object>> listAll() {
+  private ResponseEntity<HashMap<String, Object>> listAll() {
     return this.playlistBusiness.listAll();
   }
 
   @PostMapping(path = "/playlist")
-  ResponseEntity<HashMap<String, Object>> save(@RequestBody Playlist playlist) {
+  private ResponseEntity<HashMap<String, Object>> save(@RequestBody Playlist playlist) {
     return this.playlistBusiness.save(playlist);
   }
 
   @GetMapping(path = "/playlist/{id}")
-  ResponseEntity<HashMap<String, Object>> findById(@PathVariable Integer id) {
+  private ResponseEntity<HashMap<String, Object>> findById(@PathVariable Integer id) {
     return this.playlistBusiness.findById(id);
   }
 
   @PutMapping(path = "/playlist")
-  ResponseEntity<HashMap<String, Object>> update(@RequestBody Playlist playlist) {
+  private ResponseEntity<HashMap<String, Object>> update(@RequestBody Playlist playlist) {
     return this.playlistBusiness.update(playlist);
   }
 

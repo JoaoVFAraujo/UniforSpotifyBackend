@@ -18,12 +18,12 @@ public class MusicController {
   private MusicBusiness musicBusiness;
 
   @GetMapping(path = "/music")
-  ResponseEntity<HashMap<String, Object>> listAll() {
+  private ResponseEntity<HashMap<String, Object>> listAll() {
     return musicBusiness.listAll();
   }
 
   @GetMapping(path = "music/{id}")
-  ResponseEntity<HashMap<String, Object>> findById(@PathVariable Integer id) {
+  private ResponseEntity<HashMap<String, Object>> findById(@PathVariable Integer id) {
     return musicBusiness.findById(id);
   }
 

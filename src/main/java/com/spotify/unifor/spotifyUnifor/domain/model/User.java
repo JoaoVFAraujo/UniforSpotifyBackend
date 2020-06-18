@@ -3,11 +3,13 @@ package com.spotify.unifor.spotifyUnifor.domain.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.Date;
 
-@Getter @Setter
+@Getter @Setter @Entity @Table
 public class User {
 
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
   private String nome;
   private String email;

@@ -3,9 +3,13 @@ package com.spotify.unifor.spotifyUnifor.domain.model;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+import javax.persistence.*;
+
+@Getter @Setter @Entity @Table
 public class Music {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
   private String title;
   private String album;

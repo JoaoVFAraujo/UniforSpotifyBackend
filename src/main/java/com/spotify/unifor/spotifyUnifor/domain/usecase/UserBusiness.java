@@ -1,16 +1,15 @@
 package com.spotify.unifor.spotifyUnifor.domain.usecase;
 
-import com.spotify.unifor.spotifyUnifor.domain.exception.UserAuthenticateException;
 import com.spotify.unifor.spotifyUnifor.domain.exception.UserExistsException;
 import com.spotify.unifor.spotifyUnifor.domain.exception.UserNotExistsException;
 import com.spotify.unifor.spotifyUnifor.domain.model.Response;
 import com.spotify.unifor.spotifyUnifor.domain.model.User;
 import com.spotify.unifor.spotifyUnifor.domain.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Objects;
@@ -18,14 +17,14 @@ import java.util.Objects;
 @Service
 public class UserBusiness {
 
-  @Inject
+  @Autowired
   private UserRepository userRepository;
 
   protected static SecureRandom random = new SecureRandom();
 
   public ResponseEntity<HashMap<String, Object>> login(User user) {
 
-    final User userMock = this.userRepository.login(user).orElseThrow(UserAuthenticateException::new);
+    final User userMock = this.userRepository.findByEmailAndSenha(user.getEmail(), user.getSenha());
 
     HashMap<String, Object> body = new HashMap<String, Object>();
     body.put("userId", userMock.getId());
@@ -68,7 +67,7 @@ public class UserBusiness {
     return new ResponseEntity<HashMap<String, Object>>
       (Response.init()
         .withMessage("Usuário editado com sucesso")
-        .withBody(this.userRepository.update(user))
+        .withBody(this.userRepository.save(user))
         .getResponse(), HttpStatus.OK);
   }
 
@@ -76,7 +75,7 @@ public class UserBusiness {
     return new ResponseEntity<HashMap<String, Object>>
       (Response.init()
         .withMessage("Todos usuários")
-        .withBody(this.userRepository.listAll())
+        .withBody(this.userRepository.findAll())
         .getResponse(), HttpStatus.OK);
   }
 

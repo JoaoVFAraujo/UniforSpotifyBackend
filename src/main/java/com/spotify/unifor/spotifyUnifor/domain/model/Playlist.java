@@ -3,14 +3,20 @@ package com.spotify.unifor.spotifyUnifor.domain.model;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+import javax.persistence.*;
+import java.util.List;
+
+@Getter @Setter @Entity @Table
 public class Playlist {
 
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
   private String nome;
   private String image;
   private Integer userId;
-  private Music[] musicas;
+  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+  @JoinTable(name = "playlist_music", joinColumns = @JoinColumn(name = "id_playlist", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_musica", referencedColumnName = "id"))
+  private List<Music> musicas;
 
   public static Playlist init() { return new Playlist(); }
 
@@ -34,7 +40,7 @@ public class Playlist {
     return this;
   }
 
-  public Playlist withMusicas(Music[] musicas) {
+  public Playlist withMusicas(List<Music> musicas) {
     this.musicas = musicas;
     return this;
   }

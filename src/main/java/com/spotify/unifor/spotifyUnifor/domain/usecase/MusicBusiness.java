@@ -1,6 +1,7 @@
 package com.spotify.unifor.spotifyUnifor.domain.usecase;
 
 import com.spotify.unifor.spotifyUnifor.domain.exception.MusicNotExistsException;
+import com.spotify.unifor.spotifyUnifor.domain.model.Music;
 import com.spotify.unifor.spotifyUnifor.domain.model.Response;
 import com.spotify.unifor.spotifyUnifor.domain.repository.MusicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,14 @@ public class MusicBusiness {
       (Response.init()
         .withMessage("Musica encontrada com sucesso!")
         .withBody(this.musicRepository.findById(id))
+        .getResponse(), HttpStatus.OK);
+  }
+
+  public ResponseEntity<HashMap<String, Object>> save(Music music) {
+    return new ResponseEntity<HashMap<String, Object>>
+      (Response.init()
+        .withMessage(("Musica cadastra com sucesso"))
+        .withBody(this.musicRepository.save(music))
         .getResponse(), HttpStatus.OK);
   }
 

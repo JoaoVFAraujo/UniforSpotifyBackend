@@ -35,4 +35,17 @@ public class PlaylistController {
     return this.playlistBusiness.update(playlist);
   }
 
-  }
+
+//  INSERT INTO playlist (nome, image, user_id)
+//  VALUES
+//  ("Brasil 360", "assets/imgs/playlist/brasil360.jpg", 1),
+//  ("Reggaeton 2020", "assets/imgs/playlist/reggaeton2020.jpg", 1),
+//  ("Club Queens", "assets/imgs/playlist/clubQueens.jpg", 1),
+//  ("Sofrencia Sertaneja", "assets/imgs/playlist/sofrenciaSertaneja.jpg", 1),
+//  ("Eletro BR", "assets/imgs/playlist/eletroBR.jpg", 1);
+
+//  INSERT INTO playlist_music (id_playlist, id_musica)
+//  VALUES (1, 1), (1, 4), (1, 6), (2, 2), (2, 4), (2, 5), (3, 1), (3, 5), (3, 6), (4, 3), (4, 2), (4, 6), (5, 2), (5, 3), (5, 4);
+
+
+}

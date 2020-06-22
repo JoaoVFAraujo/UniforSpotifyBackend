@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 
 @RestController
-@CrossOrigin("http://*")
+@CrossOrigin("*")
 public class UserController {
 
   @Autowired
@@ -38,9 +38,7 @@ public class UserController {
 
 //  INSERT INTO user (nome, email, senha, data, genero, compartilhar_dados)
 //  VALUES
-//  ("Admin", "admin@teste.com", "admin1234", "1999-03-15 00:00:00", "any", false),
-//  ("Joao", "joao@teste.com", "teste123", "1999-03-15 00:00:00", "m", false),
-//  ("Enilton", "enilton@teste.com", "teste321", "1999-08-02 00:00:00", "m", true),
-//  ("Marina", "marina@teste.com", "123teste", "1999-11-20 00:00:00", "f", false);
+//  ("Admin", "admin@teste.com", "admin1234", "1999-03-15 00:00:00", "any", false);
+// MODIFICAR SENHA
 
 }

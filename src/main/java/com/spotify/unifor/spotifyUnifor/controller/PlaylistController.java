@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 
 @RestController
-@CrossOrigin("http://*")
+@CrossOrigin("*")
 public class PlaylistController {
 
   @Autowired
@@ -28,6 +28,11 @@ public class PlaylistController {
   @GetMapping(path = "/playlist/{id}")
   private ResponseEntity<HashMap<String, Object>> findById(@PathVariable Integer id) {
     return this.playlistBusiness.findById(id);
+  }
+
+  @GetMapping(path = "/playlist/userId/{userId}")
+  private ResponseEntity<HashMap<String, Object>> findByUserId(@PathVariable Integer userId) {
+    return this.playlistBusiness.findByUserId(userId);
   }
 
   @PutMapping(path = "/playlist")

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 
 @RestController
-@CrossOrigin("http://*")
+@CrossOrigin("*")
 public class MusicController {
 
   @Autowired
@@ -33,10 +33,10 @@ public class MusicController {
 //  INSERT INTO music (title, album, tempo, link)
 //  VALUES
 //  ("The Neighbourhood - Sweater Weather", "AA", 249, "assets/mp3/sweater-weather.mp3"),
-//  ("EDEN - drugs", "BB", 360, "assets/mp3/sweater-weather.mp3"),
-//  ("Axel Thesleff - Bad Karma", "CC", 426, "assets/mp3/sweater-weather.mp3"),
-//  ("Breakbot - Baby I'm Yours", "DD", 138, "assets/mp3/sweater-weather.mp3"),
-//  ("Petit Biscuit - Sunset Lover", "EE", 201, "assets/mp3/sweater-weather.mp3"),
-//  ("Kygo - Firestone", "FF", 207, "assets/mp3/sweater-weather.mp3");
+//  ("EDEN - drugs", "BB", 360, "assets/mp3/drugs.mp3"),
+//  ("Axel Thesleff - Bad Karma", "CC", 426, "assets/mp3/bad-karma.mp3"),
+//  ("Breakbot - Baby I'm Yours", "DD", 138, "assets/mp3/baby-im-yours.mp3"),
+//  ("Petit Biscuit - Sunset Lover", "EE", 201, "assets/mp3/sunset-lover.mp3"),
+//  ("Kygo - Firestone", "FF", 207, "assets/mp3/firestone.mp3");
 
 }

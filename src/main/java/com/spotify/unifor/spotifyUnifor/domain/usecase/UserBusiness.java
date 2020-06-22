@@ -5,6 +5,7 @@ import com.spotify.unifor.spotifyUnifor.domain.exception.UserNotExistsException;
 import com.spotify.unifor.spotifyUnifor.domain.model.Response;
 import com.spotify.unifor.spotifyUnifor.domain.model.User;
 import com.spotify.unifor.spotifyUnifor.domain.repository.UserRepository;
+import com.spotify.unifor.spotifyUnifor.domain.util.loginUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,8 @@ public class UserBusiness {
   protected static SecureRandom random = new SecureRandom();
 
   public ResponseEntity<HashMap<String, Object>> login(User user) {
+
+    user.setSenha(loginUtil.enconde(user.getSenha()));
 
     final User userMock = this.userRepository.findByEmailAndSenha(user.getEmail(), user.getSenha());
 
@@ -51,6 +54,8 @@ public class UserBusiness {
   public ResponseEntity<HashMap<String, Object>> save(User user) {
     if (this.userRepository.existsByEmail(user.getEmail())) throw new UserExistsException(user.getEmail());
 
+    user.setSenha(loginUtil.enconde(user.getSenha()));
+
     return new ResponseEntity<HashMap<String, Object>>
       (Response.init()
         .withMessage("Usuário cadastrado com sucesso!")
@@ -60,6 +65,8 @@ public class UserBusiness {
 
   public ResponseEntity<HashMap<String, Object>> update(User user) {
     User userMock = this.userRepository.findById(user.getId()).orElseThrow(UserNotExistsException::new);
+
+    user.setSenha(loginUtil.enconde(user.getSenha()));
 
     if (!(Objects.equals(userMock.getEmail(), user.getEmail())) && this.userRepository.existsByEmail(user.getEmail()))
       throw new UserExistsException(user.getEmail());
